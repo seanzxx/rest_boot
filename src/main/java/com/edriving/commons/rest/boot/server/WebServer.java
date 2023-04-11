@@ -2,6 +2,7 @@ package com.edriving.commons.rest.boot.server;
 
 import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.server.handler.HandlerCollection;
+import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -12,7 +13,7 @@ public class WebServer {
     private static final String API_PORT_PROPERTY = "api-port";
     private static final String ADMIN_PORT_PROPERTY = "admin-port";
     private static final String API_PORT_DEFAULT = "8080";
-    private static final String ADMIN_PORT_DEFAULT = "8080";
+    private static final String ADMIN_PORT_DEFAULT = API_PORT_DEFAULT;
 
     private static final String PACKAGE_API_PROPERTY = "api-package";
     private static final String PACKAGE_ADMIN_PROPERTY = "admin-package";
@@ -46,6 +47,10 @@ public class WebServer {
         try {
             jettyServer.start();
             jettyServer.join();
+        } catch (Throwable t) {
+            System.err.println("An error occurred during server startup:\n");
+            t.printStackTrace();
+            jettyServer.stop();
         } finally {
             jettyServer.destroy();
         }
@@ -61,11 +66,16 @@ public class WebServer {
         resourceConfig.packages(true, packages);
         resourceConfig.setApplicationName(appName);
         resourceConfig.register(MultiPartFeature.class);
+        resourceConfig.register(GsonMessageBodyHandler.class);
         ServletContextHandler contextHandler = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
         ServletHolder externalServletHolder = new ServletHolder(new ServletContainer(resourceConfig));
         contextHandler.addServlet(externalServletHolder, pathSpec);
         contextHandler.setContextPath(contextPath);
         contextHandler.setVirtualHosts(new String[]{"@" + appName});
+        GzipHandler gzip = new GzipHandler();
+        gzip.setIncludedMethods("GET", "POST", "PUT", "PATCH");
+        gzip.setIncludedMimeTypes("application/json");
+        contextHandler.setGzipHandler(gzip);
         return contextHandler;
     }
     private static void createServerConnector(Server jettyServer, String name, int port) {
