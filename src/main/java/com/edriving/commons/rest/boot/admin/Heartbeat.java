@@ -1,6 +1,7 @@
 package com.edriving.commons.rest.boot.admin;
 
-import javax.ws.rs.ext.Provider;
+
+import jakarta.ws.rs.ext.Provider;
 
 @Provider
 public interface Heartbeat {

@@ -1,11 +1,11 @@
 package com.edriving.commons.rest.boot.server;
 
+import jakarta.ws.rs.ext.Provider;
 import org.glassfish.jersey.server.monitoring.ApplicationEvent;
 import org.glassfish.jersey.server.monitoring.ApplicationEventListener;
 import org.glassfish.jersey.server.monitoring.RequestEvent;
 import org.glassfish.jersey.server.monitoring.RequestEventListener;
 
-import javax.ws.rs.ext.Provider;
 
 @Provider
 public class AppInitializationLog implements ApplicationEventListener {
