@@ -20,7 +20,7 @@ To get started with Rest Boot, you'll need to add the following dependency to yo
 <dependency>
     <groupId>com.edriving.commons</groupId>
     <artifactId>rest-boot</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 Once you've added the dependency, you can start using Rest Boot in your project.
@@ -66,6 +66,15 @@ To run the example included with Rest Boot, follow these steps:
 5. Open a web browser and go to `http://localhost:8080/hello`
 
 You should see a "Hello, world!" message in your web browser. This demonstrates how to define a simple resource class and respond to HTTP requests.
+
+## Upgrading from 1.x
+Version 2.0.0 introduces the following breaking changes:
+
+1. **Update to Java 11:** The minimal Java version required to run this application has been updated from 1.8 to 11. If you are currently using an earlier version of Java, you will need to upgrade to Java 11 or later before upgrading to version 2.0.0.
+2. **Switch to Jakarta EE:** We have switched to using Jakarta EE instead of Java EE. This change affects the APIs and libraries used in the application. If your code references any Java EE APIs or libraries, you will need to update them to the corresponding Jakarta EE versions.  The following import need to be updated:
+   * `javax.ws.rs` -> `jakarta.ws.rs`
+
+By making these changes, we are able to take advantage of the latest features and improvements in Java and the Jakarta EE platform. However, please note that these changes may require modifications to your code, configuration, and dependencies, and should be carefully considered before upgrading to version 2.0.0.
 
 ## License
 
