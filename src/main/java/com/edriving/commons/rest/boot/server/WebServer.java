@@ -88,7 +88,7 @@ public class WebServer {
         GzipHandler gzip = new GzipHandler();
         gzip.setIncludedMethods("GET", "POST", "PUT", "PATCH");
         gzip.setIncludedMimeTypes("application/json");
-        contextHandler.setGzipHandler(gzip);
+        contextHandler.insertHandler(gzip);
         return contextHandler;
     }
     private static void createServerConnector(Server jettyServer, String name, int port) {
