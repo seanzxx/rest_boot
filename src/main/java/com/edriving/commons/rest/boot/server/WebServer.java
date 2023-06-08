@@ -32,7 +32,10 @@ public class WebServer {
         int adminPort = Integer.parseInt(System.getProperty(ADMIN_PORT_PROPERTY, String.valueOf(apiPort)));
         //read parameters PACKAGES
         String apiPackage = System.getProperty(PACKAGE_API_PROPERTY);
-        apiPackage = PACKAGE_SERVER +  (apiPackage == null ? "" : ";" + apiPackage.trim());
+        if (apiPackage == null || apiPackage.trim().isEmpty()) {
+            throw new IllegalArgumentException("PLEASE SPECIFY VALUE FOR '" + PACKAGE_API_PROPERTY + "' property. (Example: -D" + PACKAGE_API_PROPERTY + "=com.domain.api)");
+        }
+        apiPackage = PACKAGE_SERVER + ";" + apiPackage.trim();
         String adminPackage = System.getProperty(PACKAGE_ADMIN_PROPERTY);
         adminPackage = PACKAGE_ADMIN +  (adminPackage == null ? "" : ";" + adminPackage.trim());
         if (adminPort == apiPort) {
