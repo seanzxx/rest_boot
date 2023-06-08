@@ -6,19 +6,22 @@ import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.message.GZipEncoder;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.filter.EncodingFilter;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 public class WebServer {
     private static final String API_PORT_PROPERTY = "api-port";
     private static final String ADMIN_PORT_PROPERTY = "admin-port";
     private static final String API_PORT_DEFAULT = "8080";
-    private static final String ADMIN_PORT_DEFAULT = API_PORT_DEFAULT;
 
     private static final String PACKAGE_API_PROPERTY = "api-package";
     private static final String PACKAGE_ADMIN_PROPERTY = "admin-package";
     private static final String PACKAGE_SERVER = "com.edriving.commons.rest.boot.server";
     private static final String PACKAGE_ADMIN = "com.edriving.commons.rest.boot.admin";
+
+    private static final String ENABLE_REQUEST_CONTENT_ENCODING_PROPERTY = "enable-request-content-encoding";
 
     public static void main(String[] args) throws Exception {
         //logs settings
@@ -26,7 +29,7 @@ public class WebServer {
         System.setProperty("org.eclipse.jetty.LEVEL", "INFO");
         //read parameters PORTS
         int apiPort = Integer.parseInt(System.getProperty(API_PORT_PROPERTY, API_PORT_DEFAULT));
-        int adminPort = Integer.parseInt(System.getProperty(ADMIN_PORT_PROPERTY, ADMIN_PORT_DEFAULT));
+        int adminPort = Integer.parseInt(System.getProperty(ADMIN_PORT_PROPERTY, String.valueOf(apiPort)));
         //read parameters PACKAGES
         String apiPackage = System.getProperty(PACKAGE_API_PROPERTY);
         apiPackage = PACKAGE_SERVER +  (apiPackage == null ? "" : ";" + apiPackage.trim());
@@ -67,6 +70,16 @@ public class WebServer {
         resourceConfig.setApplicationName(appName);
         resourceConfig.register(MultiPartFeature.class);
         resourceConfig.register(GsonMessageBodyHandler.class);
+        String encodingEnabled = System.getProperty(ENABLE_REQUEST_CONTENT_ENCODING_PROPERTY);
+        if (encodingEnabled != null && (
+                encodingEnabled.equalsIgnoreCase("yes")
+                        || encodingEnabled.equalsIgnoreCase("y")
+                        || encodingEnabled.equalsIgnoreCase("true")
+                        || encodingEnabled.equalsIgnoreCase("t")
+                        || encodingEnabled.equalsIgnoreCase("1")
+                )) {
+            EncodingFilter.enableFor(resourceConfig, GZipEncoder.class);
+        }
         ServletContextHandler contextHandler = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
         ServletHolder externalServletHolder = new ServletHolder(new ServletContainer(resourceConfig));
         contextHandler.addServlet(externalServletHolder, pathSpec);
