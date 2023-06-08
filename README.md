@@ -11,6 +11,7 @@ Rest Boot includes the following features:
 - Embedded Jetty server: Rest Boot includes an embedded Jetty server, so you don't need to set up a separate server to run your API.
 - Customizable error handling: Rest Boot includes customizable error handling, so you can provide meaningful error messages to your API users.
 - Lightweight and flexible: Rest Boot is lightweight and flexible, so you can use it with a variety of Java frameworks and libraries.
+- Possible to run 2 ports: api port and admin port. By default, the ports collapsed into a single port. 
 
 ## Getting Started
 
@@ -20,7 +21,7 @@ To get started with Rest Boot, you'll need to add the following dependency to yo
 <dependency>
     <groupId>com.edriving.commons</groupId>
     <artifactId>rest-boot</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 ```
 Once you've added the dependency, you can start using Rest Boot in your project.
@@ -66,6 +67,16 @@ To run the example included with Rest Boot, follow these steps:
 5. Open a web browser and go to `http://localhost:8080/hello`
 
 You should see a "Hello, world!" message in your web browser. This demonstrates how to define a simple resource class and respond to HTTP requests.
+
+## Configuration
+Rest Boot can be configured using following system properties:
+- api-package (mandatory)
+- api-port (optional, default: 8080)
+- admin-package (optional, default: same as api package)
+- admin-port (optional, default: same as api port)
+- enable-request-content-encoding (optional, default: disabled. To enable, set the value to "true" (-Denable-request-content-encoding=true) )
+- cors-origins (optional, default: "*")
+- cors-methods (optional, default: "GET, POST, DELETE, PUT, PATCH, OPTIONS")
 
 ## License
 
