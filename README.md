@@ -68,6 +68,7 @@ To run the example included with Rest Boot, follow these steps:
 
 You should see a "Hello, world!" message in your web browser. This demonstrates how to define a simple resource class and respond to HTTP requests.
 
+
 ## Configuration
 Rest Boot can be configured using following system properties:
 - api-package (mandatory)
@@ -77,6 +78,16 @@ Rest Boot can be configured using following system properties:
 - enable-request-content-encoding (optional, default: disabled. To enable, set the value to "true" (-Denable-request-content-encoding=true) )
 - cors-origins (optional, default: "*")
 - cors-methods (optional, default: "GET, POST, DELETE, PUT, PATCH, OPTIONS")
+
+## Upgrading from 1.x
+Version 2.0.0 introduces the following breaking changes:
+
+1. **Update to Java 11:** The minimal Java version required to run this application has been updated from 1.8 to 11. If you are currently using an earlier version of Java, you will need to upgrade to Java 11 or later before upgrading to version 2.0.0.
+2. **Switch to Jakarta EE:** We have switched to using Jakarta EE instead of Java EE. This change affects the APIs and libraries used in the application. If your code references any Java EE APIs or libraries, you will need to update them to the corresponding Jakarta EE versions.  The following import need to be updated:
+   * `javax.ws.rs` -> `jakarta.ws.rs`
+
+By making these changes, we are able to take advantage of the latest features and improvements in Java and the Jakarta EE platform. However, please note that these changes may require modifications to your code, configuration, and dependencies, and should be carefully considered before upgrading to version 2.0.0.
+
 
 ## License
 
