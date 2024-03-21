@@ -21,7 +21,7 @@ To get started with Rest Boot, you'll need to add the following dependency to yo
 <dependency>
     <groupId>com.edriving.commons</groupId>
     <artifactId>rest-boot</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
 </dependency>
 ```
 Once you've added the dependency, you can start using Rest Boot in your project.
