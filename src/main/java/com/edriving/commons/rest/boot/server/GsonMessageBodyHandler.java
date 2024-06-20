@@ -27,14 +27,7 @@ import java.time.ZonedDateTime;
 @Provider
 public class GsonMessageBodyHandler implements MessageBodyWriter<Object>, MessageBodyReader<Object> {
 
-    private static final Gson GSON = new GsonBuilder()
-            .disableHtmlEscaping()
-            .setPrettyPrinting()
-            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-            .registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter())
-            .registerTypeAdapter(Instant.class, new InstantAdapter())
-            .create();
+    private static final Gson GSON;
 
     @Override
     public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
@@ -78,5 +71,21 @@ public class GsonMessageBodyHandler implements MessageBodyWriter<Object>, Messag
             }
             GSON.toJson(object, jsonType, writer);
         }
+    }
+
+    private static final String GSON_PRETTY_PRINTING_PROPERTY = "gson-pretty-printing";
+    static {
+        GsonBuilder gsonBuilder = new GsonBuilder()
+                .disableHtmlEscaping()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                .registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter())
+                .registerTypeAdapter(Instant.class, new InstantAdapter());
+
+        if (Boolean.parseBoolean(System.getProperty(GSON_PRETTY_PRINTING_PROPERTY))) {
+            gsonBuilder.setPrettyPrinting();
+        }
+
+        GSON =  gsonBuilder.create();
     }
 }
