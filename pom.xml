@@ -6,7 +6,7 @@
 
     <groupId>com.edriving.commons</groupId>
     <artifactId>rest-boot</artifactId>
-    <version>2.2.0</version>
+    <version>2.2.1</version>
     <packaging>jar</packaging>
 
     <name>Rest Boot</name>
@@ -35,13 +35,19 @@
             <organization>eDriving</organization>
             <organizationUrl>https://www.edriving.com</organizationUrl>
         </developer>
+        <developer>
+            <name>Sean Zeng</name>
+            <email>sean.zeng@edriving.com</email>
+            <organization>eDriving</organization>
+            <organizationUrl>https://www.edriving.com</organizationUrl>
+        </developer>
     </developers>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <jersey.version>3.1.3</jersey.version>
-        <jetty.version>11.0.20</jetty.version>
+        <jetty.version>11.0.25</jetty.version>
         <json.gson.version>2.10.1</json.gson.version>
     </properties>
 
