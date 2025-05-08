@@ -1,27 +1,20 @@
 package com.edriving.commons.rest.boot.server.params;
 
-import jakarta.ws.rs.WebApplicationException;
+import com.edriving.commons.rest.boot.server.adapter.LocalDateAdapter;
 import jakarta.ws.rs.ext.ParamConverter;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
-public class LocalDateParamConverter implements ParamConverter<LocalDate> {
-    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ISO_LOCAL_DATE;
-    private LocalDate parse(String value) {
-        try {
-            return LocalDate.parse(value, DATE_FORMAT);
-        } catch (DateTimeParseException t) {
-            throw new WebApplicationException("cannot parse '" + value + "' to Local Date", 400);
-        }
-    }
+public class LocalDateParamConverter
+        extends LocalDateAdapter
+        implements ParamConverter<LocalDate> {
     @Override
     public LocalDate fromString(String value) {
-        return value == null ? null : parse(value);
+        return parse(value);
     }
+
     @Override
     public String toString(LocalDate value) {
-        return value == null ? null : value.format(DATE_FORMAT);
+        return format(value);
     }
 }

@@ -1,9 +1,6 @@
 package com.edriving.commons.rest.boot.server;
 
-import com.edriving.commons.rest.boot.server.adapter.InstantAdapter;
-import com.edriving.commons.rest.boot.server.adapter.LocalDateAdapter;
-import com.edriving.commons.rest.boot.server.adapter.LocalDateTimeAdapter;
-import com.edriving.commons.rest.boot.server.adapter.ZonedDateTimeAdapter;
+import com.edriving.commons.rest.boot.server.adapter.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
@@ -19,10 +16,7 @@ import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
+import java.time.*;
 
 @Provider
 public class GsonMessageBodyHandler implements MessageBodyWriter<Object>, MessageBodyReader<Object> {
@@ -80,6 +74,7 @@ public class GsonMessageBodyHandler implements MessageBodyWriter<Object>, Messag
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                 .registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter())
+                .registerTypeAdapter(ZoneId.class, new ZonedIdAdapter())
                 .registerTypeAdapter(Instant.class, new InstantAdapter());
 
         if (Boolean.parseBoolean(System.getProperty(GSON_PRETTY_PRINTING_PROPERTY))) {
