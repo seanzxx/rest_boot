@@ -6,10 +6,7 @@ import jakarta.ws.rs.ext.Provider;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 
 @Provider
 public class UrlParamsProvider implements ParamConverterProvider {
@@ -21,6 +18,8 @@ public class UrlParamsProvider implements ParamConverterProvider {
             return (ParamConverter<T>) new LocalDateParamConverter();
         } else if (rawType.equals(LocalDateTime.class)) {
             return (ParamConverter<T>) new LocalDateTimeParamConverter();
+        } else if (rawType.equals(ZonedDateTime.class)) {
+            return (ParamConverter<T>) new ZonedDateTimeParamConverter();
         } else if (rawType.equals(ZoneId.class)) {
             return (ParamConverter<T>) new ZoneIdParamConverter();
         } else if (rawType.equals(Integer.class)) {
