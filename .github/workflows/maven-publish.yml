@@ -28,7 +28,8 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Publish to GitHub Packages Apache Maven
-      run: mvn install -s $GITHUB_WORKSPACE/settings.xml -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}
+      run: mvn install -s $GITHUB_WORKSPACE/settings.xml
       env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
