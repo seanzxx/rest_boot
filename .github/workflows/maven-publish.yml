@@ -17,6 +17,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+        settings-path: ${{ github.workspace }}
         server-id: ossrh
         server-username: OSSRH_USERNAME
         server-password: OSSRH_PASSWORD
