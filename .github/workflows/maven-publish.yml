@@ -16,7 +16,7 @@ jobs:
       uses: actions/setup-java@v4
       with:
         java-version: '11'
-        distribution: 'temurin'
+        distribution: 'oracle'
         settings-path: ${{ github.workspace }}
         server-id: ossrh
         server-username: OSSRH_USERNAME
